@@ -85,6 +85,11 @@ bool pd_start_audio_capture(void);
 void pd_stop_audio_capture(void);
 bool pd_is_capturing(void);
 
+/* Feed audio samples directly (alternative to system capture).
+ * Call from your audio callback to analyze your own game audio.
+ * Samples should be mono float, any sample rate. */
+void pd_feed_samples(const float *samples, int count);
+
 /* ================================================================== */
 /*  Mode A: Spotify Integration                                        */
 /* ================================================================== */

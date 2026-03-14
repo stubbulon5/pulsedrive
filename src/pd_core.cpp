@@ -125,3 +125,18 @@ bool pd_is_capturing(void)
 {
     return g_pd.capturing;
 }
+
+/* ================================================================== */
+/*  Direct sample feed (for tapping game audio output)                 */
+/* ================================================================== */
+
+void pd_feed_samples(const float *samples, int count)
+{
+    if (!g_pd.initialized || !samples || count <= 0) return;
+
+    for (int i = 0; i < count; i++) {
+        int pos = g_pd.ring.write_pos;
+        g_pd.ring.samples[pos] = samples[i];
+        g_pd.ring.write_pos = (pos + 1) & PD_RING_MASK;
+    }
+}
